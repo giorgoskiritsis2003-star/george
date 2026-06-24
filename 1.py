@@ -1,5 +1,6 @@
 import streamlit as st 
 import datetime
+import requests
 
 st.markdown(
     """
@@ -84,5 +85,21 @@ if Game or Movie or Drink or Food or Walk:
     st.write("Event scheduled for", event_date, "στις", event_time)
     
 if st.button('Submit my picks '):
-        
-        st.success(" Τα δεδομένα στάλθηκαν")
+    webhook_url = "https://discord.com/api/webhooks/1519280679433801779/gCcudWI8zYoQ25bRt-9qcjMF8QycRKgCFZbiwvf1zQXhqXyL9pEHCjPVi0zvPGSUO6Us"
+    
+    to_minima_mou = f" Έχεις νέο ραντεβού\n"
+    to_minima_mou += f"**Τι θα κάνετε:** {catagory}\n"
+    
+    
+    if Game: to_minima_mou += f"**Παιχνίδι:** {Game}\n"
+    if Movie: to_minima_mou += f"**Ταινία:** {Movie}\n"
+    if Drink: to_minima_mou += f"**Ποτό:** {Drink}\n"
+    if Food: to_minima_mou += f"**Φαγητό:** {Food}\n"
+    if Walk: to_minima_mou += f"**Βόλτα:** {Walk}\n"
+    
+    to_minima_mou += f"**Πότε:** {event_date} στις {event_time}"
+    
+    data = {"content": to_minima_mou}
+    requests.post(webhook_url, json=data)
+
+    st.success(" Τα δεδομένα στάλθηκαν")

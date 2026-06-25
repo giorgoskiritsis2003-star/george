@@ -85,7 +85,7 @@ if Game or Movie or Drink or Food or Walk:
     st.write("Event scheduled for", event_date, "στις", event_time)
     
 if st.button('Submit my picks '):
-    webhook_url = "https://discord.com/api/webhooks/1519280679433801779/gCcudWI8zYoQ25bRt-9qcjMF8QycRKgCFZbiwvf1zQXhqXyL9pEHCjPVi0zvPGSUO6Us"
+    webhook_url = st.secrets["discord_url1"] 
     
     to_minima_mou = f" Έχεις νέο ραντεβού\n"
     to_minima_mou += f"**Τι θα κάνετε:** {catagory}\n"

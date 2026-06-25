@@ -37,7 +37,7 @@ if final_game:
     st.write("Event scheduled for", event_date, "στις", event_time)
     
 if st.button('Submit my picks '):
-    webhook_url = "https://discord.com/api/webhooks/1519285788628619394/yc1ctLVhT7eHvcD6GlA6SCIrwU9OFr85OBvtk_WWfE1iTrGqZ1TjGXVgktsqLMvCCRSQ"
+    webhook_url = st.secrets["discord_url2"] 
     
     to_minima_mou = f"Game Night!\n"
     to_minima_mou += f"Παιχνίδι: {final_game}\n"

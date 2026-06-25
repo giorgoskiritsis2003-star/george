@@ -53,7 +53,7 @@ admin_password = st.text_input("Κωδικός:", type="password")
 if admin_password == "2905":
     if st.button("Λήξη Ψηφοφορίας & Αποτελέσματα "):
         
-        webhook_url = st.secrets["discord_url"] 
+        webhook_url = st.secrets["discord_url3"] 
         
         try:
             with open("votes.txt", "r", encoding="utf-8") as file:

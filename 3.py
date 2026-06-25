@@ -26,7 +26,6 @@ catagory = st.radio(
 
 final_game = catagory
 
-
 if st.button('Submit my picks '):
     webhook_url = "https://discord.com/api/webhooks/1519616499390746697/BwFQFOq7gcM3IcGxNhGizcBJLjJwCx-S7-0AqlaQmMEHC_tuh7a6fdtFanCW22ZZJdY4" 
     
@@ -42,7 +41,6 @@ if st.button('Submit my picks '):
 
     st.success("Τα δεδομένα στάλθηκαν επιτυχώς!")
 
-
 st.write("---")
 st.header(" Admin")
 
@@ -50,15 +48,12 @@ admin_password = st.text_input("Κωδικός:", type="password")
 
 if admin_password == "2905":
     if st.button("Λήξη Ψηφοφορίας & Αποτελέσματα "):
-        
         webhook_url = "https://discord.com/api/webhooks/1519616499390746697/BwFQFOq7gcM3IcGxNhGizcBJLjJwCx-S7-0AqlaQmMEHC_tuh7a6fdtFanCW22ZZJdY4" 
         
         try:
-            
             with open("votes.txt", "r", encoding="utf-8") as file:
                 lines = file.readlines()
                 
-           
             votes_count = {}
             for line in lines:
                 parts = line.strip().split(",")
@@ -69,7 +64,6 @@ if admin_password == "2905":
                     else:
                         votes_count[game] = 1
             
-            
             if votes_count:
                 results_msg = " Η ΨΗΦΟΦΟΡΙΑ ΕΚΛΕΙΣΕ! ΟΡΙΣΤΕ ΤΑ ΑΠΟΤΕΛΕΣΜΑΤΑ: \n\n"
                 
@@ -79,9 +73,7 @@ if admin_password == "2905":
                 
                 max_votes = max(votes_count.values())
                 
-                
                 tied_games = [game for game, count in votes_count.items() if count == max_votes]
-                
                 
                 if len(tied_games) > 1:
                     winner = random.choice(tied_games)
@@ -92,12 +84,17 @@ if admin_password == "2905":
                     winner = tied_games[0]
                     results_msg += f"\n Ο ΝΙΚΗΤΗΣ ΕΙΝΑΙ: {winner}  \n"
                 
-                
                 data = {"content": results_msg}
                 requests.post(webhook_url, json=data)
                 
                 st.success("Τα αποτελέσματα στάλθηκαν στο Discord με επιτυχία!")
                 st.balloons()
+                
+                
+                with open("votes.txt", "w", encoding="utf-8") as file:
+                    pass
+                st.info("Το αρχείο των ψήφων καθαρίστηκε αυτόματα και είναι έτοιμο για την επόμενη φορά! ")
+                
                 
             else:
                 st.warning("Δεν υπάρχουν ψήφοι ακόμα στο αρχείο!")

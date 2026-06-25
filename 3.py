@@ -18,19 +18,23 @@ st.title("Game Roulette ")
 st.write("Διαλέξτε παιχνίδι για τον Γιώργο. Πρέπει να το κάνω ή plat ή να έχω κάνει όλα τα side missions και το story.")
 
 user_name = st.text_input("Γράψτε το όνομά σας:")
+
+
 catagory = st.radio(
     "Τι θέλετε να παίξει ο Γιώργος;",
-    ["Devil May Cry (1|5)", "Nioh (1| 2)", "Metaphor", "P5 Strikers", "Dark Souls (2| 3)", "Persona DLC", "Sekiro", "Ghost of Tsushima", "Prince of Persia", "Soul Hackers 2", "Little Nightmares 3", "Sackboy", "Nine Sols", "Blasphemous", "Final Fantasy", "Resident Evil 7 (με παρέα μόνο)", "Spider-Man(1|2)"],
+    ["Devil May Cry (1-5)", "Nioh (1, 2)", "Metaphor", "P5 Strikers", "Dark Souls (2, 3)", "Persona DLC", "Sekiro", "Ghost of Tsushima", "Prince of Persia", "Soul Hackers 2", "Little Nightmares 3", "Sackboy", "Nine Sols", "Blasphemous", "Final Fantasy", "Resident Evil 7 (με παρέα μόνο)", "Spider-Man(1, 2)"],
     index=None,
 )
 
 final_game = catagory
 
 if st.button('Submit my picks '):
-    webhook_url = "https://discord.com/api/webhooks/1519616499390746697/BwFQFOq7gcM3IcGxNhGizcBJLjJwCx-S7-0AqlaQmMEHC_tuh7a6fdtFanCW22ZZJdY4" 
+   
+    webhook_url = st.secrets["discord_url3"] 
+    
     
     with open("votes.txt", "a", encoding="utf-8") as myfile:
-        myfile.write(f"{user_name},{final_game}\n")
+        myfile.write(f"{user_name}|{final_game}\n")
 
     to_minima_mou = f"Game Roulette!\n"
     to_minima_mou += f"Άτομο: {user_name}\n"
@@ -48,7 +52,8 @@ admin_password = st.text_input("Κωδικός:", type="password")
 
 if admin_password == "2905":
     if st.button("Λήξη Ψηφοφορίας & Αποτελέσματα "):
-        webhook_url = "https://discord.com/api/webhooks/1519616499390746697/BwFQFOq7gcM3IcGxNhGizcBJLjJwCx-S7-0AqlaQmMEHC_tuh7a6fdtFanCW22ZZJdY4" 
+        
+        webhook_url = st.secrets["discord_url"] 
         
         try:
             with open("votes.txt", "r", encoding="utf-8") as file:
@@ -56,7 +61,8 @@ if admin_password == "2905":
                 
             votes_count = {}
             for line in lines:
-                parts = line.strip().split(",")
+               
+                parts = line.strip().split("|")
                 if len(parts) == 2:
                     game = parts[1]
                     if game in votes_count:
@@ -90,11 +96,9 @@ if admin_password == "2905":
                 st.success("Τα αποτελέσματα στάλθηκαν στο Discord με επιτυχία!")
                 st.balloons()
                 
-                
                 with open("votes.txt", "w", encoding="utf-8") as file:
                     pass
                 st.info("Το αρχείο των ψήφων καθαρίστηκε αυτόματα και είναι έτοιμο για την επόμενη φορά! ")
-                
                 
             else:
                 st.warning("Δεν υπάρχουν ψήφοι ακόμα στο αρχείο!")

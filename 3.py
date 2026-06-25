@@ -20,7 +20,7 @@ st.write("Διαλέξτε παιχνίδι για τον Γιώργο. Πρέπ
 user_name = st.text_input("Γράψτε το όνομά σας:")
 catagory = st.radio(
     "Τι θέλετε να παίξει ο Γιώργος;",
-    ["Devil May Cry (1-5)", "Nioh (1, 2)", "Metaphor", "P5 Strikers", "Dark Souls (2, 3)", "Persona DLC", "Sekiro", "Ghost of Tsushima", "Prince of Persia", "Soul Hackers 2", "Little Nightmares 3", "Sackboy", "Nine Sols", "Blasphemous", "Final Fantasy", "Resident Evil 7 (με παρέα μόνο)", "Spider-Man(1,2)"],
+    ["Devil May Cry (1|5)", "Nioh (1| 2)", "Metaphor", "P5 Strikers", "Dark Souls (2| 3)", "Persona DLC", "Sekiro", "Ghost of Tsushima", "Prince of Persia", "Soul Hackers 2", "Little Nightmares 3", "Sackboy", "Nine Sols", "Blasphemous", "Final Fantasy", "Resident Evil 7 (με παρέα μόνο)", "Spider-Man(1,2)"],
     index=None,
 )
 

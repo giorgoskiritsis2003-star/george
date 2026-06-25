@@ -1,6 +1,7 @@
 import streamlit as st 
 import datetime
 import requests
+import random
 
 st.markdown(
     """
@@ -13,7 +14,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-st.title("Game Roulette 🎡")
+st.title("Game Roulette ")
 st.write("Διαλέξτε παιχνίδι για τον Γιώργο. Πρέπει να το κάνω ή plat ή να έχω κάνει όλα τα side missions και το story.")
 
 user_name = st.text_input("Γράψτε το όνομά σας:")
@@ -70,15 +71,26 @@ if admin_password == "2905":
             
             
             if votes_count:
-                results_msg = " Η ΨΗΦΟΦΟΡΙΑ ΕΚΛΕΙΣΕ! ΟΡΙΣΤΕ ΤΑ ΑΠΟΤΕΛΕΣΜΑΤΑ:** \n\n"
+                results_msg = " Η ΨΗΦΟΦΟΡΙΑ ΕΚΛΕΙΣΕ! ΟΡΙΣΤΕ ΤΑ ΑΠΟΤΕΛΕΣΜΑΤΑ: \n\n"
                 
                 for game, count in votes_count.items():
                     bar = "🟩" * count  
                     results_msg += f"**{game}**: {bar} ({count})\n"
                 
+                max_votes = max(votes_count.values())
                 
-                winner = max(votes_count, key=votes_count.get)
-                results_msg += f"\n Ο ΝΙΚΗΤΗΣ ΕΙΝΑΙ: {winner}!"
+                
+                tied_games = [game for game, count in votes_count.items() if count == max_votes]
+                
+                
+                if len(tied_games) > 1:
+                    winner = random.choice(tied_games)
+                    tied_names = " και ".join(tied_games)
+                    results_msg += f"\n ΕΧΟΥΜΕ ΙΣΟΠΑΛΙΑ! Τα παιχνίδια {tied_names} πήραν από {max_votes} ψήφους!"
+                    results_msg += f"\n  Ο ΝΙΚΗΤΗΣ ΤΗΣ ΚΛΗΡΩΣΗΣ ΕΙΝΑΙ: {winner} \n"
+                else:
+                    winner = tied_games[0]
+                    results_msg += f"\n Ο ΝΙΚΗΤΗΣ ΕΙΝΑΙ: {winner}  \n"
                 
                 
                 data = {"content": results_msg}
@@ -86,6 +98,7 @@ if admin_password == "2905":
                 
                 st.success("Τα αποτελέσματα στάλθηκαν στο Discord με επιτυχία!")
                 st.balloons()
+                
             else:
                 st.warning("Δεν υπάρχουν ψήφοι ακόμα στο αρχείο!")
                 
